@@ -21,10 +21,11 @@ An Obsidian plugin for highlighting text and adding annotations, similar to Micr
 4. Install and enable it.
 
 ### Manual Installation
-1. Download `article-annotator.zip` from the latest GitHub Release.
-2. Extract it into `.obsidian/plugins/article-annotator/`.
-3. Make sure the folder contains `main.js`, `manifest.json`, and `styles.css`.
-4. Enable the plugin in Obsidian.
+1. Open the latest GitHub Release.
+2. Download `main.js`, `manifest.json`, and `styles.css`.
+3. Create the folder `.obsidian/plugins/article-annotator/`.
+4. Put the three files into that folder.
+5. Enable the plugin in Obsidian.
 
 ## Notes
 
@@ -35,7 +36,6 @@ An Obsidian plugin for highlighting text and adding annotations, similar to Micr
 ## Release Assets
 
 Each release provides:
-- `article-annotator.zip`
 - `main.js`
 - `manifest.json`
 - `styles.css`
@@ -62,10 +62,11 @@ Each release provides:
 4. 安装并启用。
 
 ### 手动安装
-1. 从最新 GitHub Release 下载 `article-annotator.zip`。
-2. 解压到 `.obsidian/plugins/article-annotator/`。
-3. 确认目录内包含 `main.js`、`manifest.json`、`styles.css`。
-4. 在 Obsidian 中启用插件。
+1. 打开最新的 GitHub Release。
+2. 下载 `main.js`、`manifest.json`、`styles.css`。
+3. 创建目录 `.obsidian/plugins/article-annotator/`。
+4. 把这三个文件放进去。
+5. 在 Obsidian 中启用插件。
 
 ## 注意事项
 
