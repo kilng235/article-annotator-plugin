@@ -47,7 +47,13 @@ var LANGUAGES = {
     "annotationExists": "⚠️ This area already has an annotation, please delete it first before re-highlighting",
     "annotationSaved": "✅ Annotation saved",
     "confirmDelete": "Are you sure you want to delete this annotation?",
-    "fileNotFound": "File not found or has been moved"
+    "fileNotFound": "File not found or has been moved",
+    "crossPageNotSupported": "Cross-page selection is not supported. Please select text within the same page.",
+    "invalidHex": "Please enter a valid hex color, e.g. #FCD34D",
+    "exportDone": "✅ Exported:",
+    "clearFileConfirm": "Are you sure you want to clear all ${n} annotations in the current file?",
+    "highlightAdded": "✅ ${color} Highlight added",
+    "fileCleared": "🗑️ Cleared ${n} annotations"
   },
   "ui": {
     "highlight": "Highlight",
@@ -63,7 +69,24 @@ var LANGUAGES = {
     "highlights": "Highlights",
     "notes": "Notes",
     "emptyHint": "Select text, then right-click to highlight or add note",
-    "deleteConfirm": "Delete this annotation?"
+    "deleteConfirm": "Delete this annotation?",
+    "search": "🔍 Search",
+    "export": "📤 Export",
+    "clear": "🗑️ Clear",
+    "navigate": "📍 Navigate",
+    "editNote": "✏️ Edit note",
+    "editNoteTitle": "✏️ Edit note",
+    "searchAll": "🔍 Search all annotations",
+    "searchResults": "${n} annotations found",
+    "clearFileConfirm": "Clear ${n} annotations for the current file?",
+    "mobileHighlight": "🔖 Highlight",
+    "mobileAddNote": "✏️ Add note",
+    "mobileSidebar": "📚 Sidebar",
+    "sidebarTitle": "📝 Article Annotator",
+    "fabAriaLabel": "Article Annotator quick actions",
+    "locationPage": "Page {page}",
+    "locationLine": "Line {line}",
+    "pdfAddNote": "✏️ Write note"
   },
   "settings": {
     "defaultColor": "Default highlight color",
@@ -73,7 +96,11 @@ var LANGUAGES = {
     "shortcuts": "Shortcuts",
     "about": "About",
     "language": "Language",
-    "languageDesc": "Interface language for the plugin"
+    "languageDesc": "Interface language for the plugin",
+    "shortcutsHint": "💡 Set shortcuts in Obsidian Settings → Hotkeys",
+    "notBound": "not bound",
+    "readingModeNotice": "Note: Annotations are not visible in Reading mode. Please switch to Editing mode to view highlights.",
+    "aboutText": "Article Annotator v0.1.13 — Inspired by Microsoft Word comments. All annotation data is stored independently and does not modify the original file."
   },
   "colorNames": {
     "#FCD34D": "Warm Yellow",
@@ -82,6 +109,24 @@ var LANGUAGES = {
     "#EF4444": "Red",
     "#8B5CF6": "Purple",
     "#06B6D4": "Cyan"
+  },
+  "time": {
+    "today": "Today",
+    "yesterday": "Yesterday"
+  },
+  "export": {
+    "title": "# 📍 Annotations Export — ${name}\n\n",
+    "exportTime": "> Export time: ",
+    "totalCount": "> Total annotations: ",
+    "items": " items",
+    "note": "**Note:** ",
+    "location": "*Location: ",
+    "fileType": "*File type: ",
+    "time": "*Time: ",
+    "pdf": "PDF",
+    "markdown": "Markdown",
+    "fileSuffix": "-annotations-export.md",
+    "exportDone": "✅ Exported:"
   }
 },
   "zh": {
@@ -102,7 +147,13 @@ var LANGUAGES = {
     "annotationExists": "⚠️ 该区域已有批注，请先删除再重新标注",
     "annotationSaved": "✅ 批注已保存",
     "confirmDelete": "确定删除这条批注？",
-    "fileNotFound": "文件不存在或已被移动"
+    "fileNotFound": "文件不存在或已被移动",
+    "crossPageNotSupported": "跨页选择暂不支持，请在同一页内选择文本",
+    "invalidHex": "请输入有效的 hex 颜色，如 #FCD34D",
+    "exportDone": "✅ 已导出：",
+    "clearFileConfirm": "确定清空当前文件的 ${n} 条批注？",
+    "highlightAdded": "✅ ${color} 高亮已添加",
+    "fileCleared": "🗑️ 已清空 ${n} 条批注"
   },
   "ui": {
     "highlight": "高亮",
@@ -118,7 +169,24 @@ var LANGUAGES = {
     "highlights": "高亮",
     "notes": "批注",
     "emptyHint": "选中文字后，右键选择高亮或批注",
-    "deleteConfirm": "确定删除这条批注？"
+    "deleteConfirm": "确定删除这条批注？",
+    "search": "🔍 搜索",
+    "export": "📤 导出",
+    "clear": "🗑️ 清空",
+    "navigate": "📍 定位",
+    "editNote": "✏️ 编辑批注",
+    "editNoteTitle": "✏️ 编辑批注",
+    "searchAll": "🔍 搜索全部批注",
+    "searchResults": "共 ${n} 条批注",
+    "clearFileConfirm": "确定清空当前文件的 ${n} 条批注？",
+    "mobileHighlight": "🔖 高亮",
+    "mobileAddNote": "✏️ 写批注",
+    "mobileSidebar": "📚 面板",
+    "sidebarTitle": "📝 文章批注",
+    "fabAriaLabel": "文章批注快捷操作",
+    "locationPage": "第 {page} 页",
+    "locationLine": "第 {line} 行",
+    "pdfAddNote": "✏️ 写批注"
   },
   "settings": {
     "defaultColor": "默认高亮颜色",
@@ -128,7 +196,11 @@ var LANGUAGES = {
     "shortcuts": "快捷键",
     "about": "关于",
     "language": "语言",
-    "languageDesc": "插件界面语言"
+    "languageDesc": "插件界面语言",
+    "shortcutsHint": "💡 可在 Obsidian 设置 → 快捷键 中为上述命令绑定快捷键",
+    "notBound": "未绑定",
+    "readingModeNotice": "说明：阅读模式当前不显示批注高亮，请在编辑模式下查看高亮。",
+    "aboutText": "文章批注 v0.1.13 — 参考 Microsoft Word 批注设计。所有批注数据独立保存，不修改原文。目前仅支持 Windows 端。"
   },
   "colorNames": {
     "#FCD34D": "暖黄",
@@ -137,24 +209,43 @@ var LANGUAGES = {
     "#EF4444": "赤红",
     "#8B5CF6": "紫色",
     "#06B6D4": "青色"
+  },
+  "time": {
+    "today": "今天",
+    "yesterday": "昨天"
+  },
+  "export": {
+    "title": "# 📍 批注导出 — ${name}\n\n",
+    "exportTime": "> 导出时间：",
+    "totalCount": "> 批注总数：",
+    "items": " 条",
+    "note": "**批注：** ",
+    "location": "*位置：",
+    "fileType": "*类型：",
+    "time": "*时间：",
+    "pdf": "PDF",
+    "markdown": "Markdown",
+    "fileSuffix": "-批注导出.md",
+    "exportDone": "✅ 已导出："
   }
 }
 };
 
 function t(key, plugin) {
-  var lang = "zh";
+  var lang = plugin?.settings?.language || "zh";
   var keys = key.split(".");
   var result = LANGUAGES[lang];
   for (var i = 0; i < keys.length; i++) {
     if (result && result[keys[i]] !== undefined) {
       result = result[keys[i]];
     } else {
+      // Fallback to Chinese
       result = LANGUAGES["zh"];
       for (var j = i; j < keys.length; j++) {
         if (result && result[keys[j]] !== undefined) {
           result = result[keys[j]];
         } else {
-          return key;
+          return key; // Return key if not found
         }
       }
       return result;
@@ -164,10 +255,16 @@ function t(key, plugin) {
 }
 
 function getColorName(color, plugin) {
-  var lang = "zh";
+  var lang = plugin?.settings?.language || "zh";
   return LANGUAGES[lang].colorNames[color] || color;
 }
+// ==================== End i18n System ====================
+
+
+// CM6 StateEffect：通知装饰层更新高亮
 var setHighlightsEffect = import_cm_state.StateEffect.define();
+
+// CM6 StateField：管理 Decoration.mark 集合，自动跟随编辑调整位置
 var highlightField = import_cm_state.StateField.define({
   create() {
     return import_cm_view.Decoration.none;
@@ -193,6 +290,8 @@ var highlightField = import_cm_state.StateField.define({
   },
   provide: (f) => import_cm_view.EditorView.decorations.from(f)
 });
+
+// 刷新当前编辑器高亮：从 annotation 数据计算文档偏移量，dispatch 到 CM6
 function getFileType(file) {
   return file?.extension === "pdf" ? "pdf" : "markdown";
 }
@@ -305,11 +404,11 @@ function ensurePdfLayer(pageEl) {
   }
   return layer;
 }
-function getAnnotationLocationLabel(annotation) {
+function getAnnotationLocationLabel(annotation, plugin) {
   if (annotation.fileType === "pdf" && isPdfPosition(annotation.position)) {
-    return `第 ${annotation.position.page} 页`;
+    return t("ui.locationPage", plugin).replace("{page}", annotation.position.page);
   }
-  return `第 ${annotation.position.startLine + 1} 行`;
+  return t("ui.locationLine", plugin).replace("{line}", annotation.position.startLine + 1);
 }
 function refreshHighlights(plugin) {
   const view = plugin.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
@@ -347,17 +446,17 @@ var VIEW_TYPE = "article-annotator-sidebar";
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2, 8);
 }
-function formatTime(ts) {
+function formatTime(ts, plugin) {
   const d = new Date(ts);
-  const now = new Date();
+  const now = /* @__PURE__ */ new Date();
   const pad = (n) => n.toString().padStart(2, "0");
   if (d.toDateString() === now.toDateString()) {
-    return `今天 ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    return `${t("time.today", plugin)} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   }
   const yesterday = new Date(now);
   yesterday.setDate(yesterday.getDate() - 1);
   if (d.toDateString() === yesterday.toDateString()) {
-    return `昨天 ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    return `${t("time.yesterday", plugin)} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   }
   return `${d.getMonth() + 1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
@@ -377,10 +476,11 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
     this.mobileFabEl = null;
     this.mobileFabPanelEl = null;
     this.pdfContextMenuHandler = null;
-    this.pdfRenderTimers = new Map();
+    this.pdfRenderTimers = /* @__PURE__ */ new Map();
   }
+  // ==================== 生命周期 ====================
   async onload() {
-    console.log("📝 文章批注: loading...");
+    console.log("\u{1F4DD} \u6587\u7AE0\u6279\u6CE8: loading...");
     await this.loadSettingsAndData();
     this.registerEditorExtension(highlightField);
     this.registerView(VIEW_TYPE, (leaf) => {
@@ -390,12 +490,14 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
     this.addRibbonIcon("pen-tool", t("pluginName", this), () => {
       this.activateSidebar();
     });
-    this.registerEvent(this.app.workspace.on("editor-menu", (menu, editor, view) => {
-      const selection = editor.getSelection();
-      if (!selection)
-        return;
-      this.addAnnotationMenuItems(menu, editor, view);
-    }));
+    this.registerEvent(
+      this.app.workspace.on("editor-menu", (menu, editor, view) => {
+        const selection = editor.getSelection();
+        if (!selection)
+          return;
+        this.addAnnotationMenuItems(menu, editor, view);
+      })
+    );
     this.registerEvent(this.app.workspace.on("active-leaf-change", (leaf) => {
       const file = leaf?.view?.file || null;
       if (!file)
@@ -582,7 +684,7 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
     menu.addSeparator();
     menu.addItem((item) => {
       item.setIcon("sticky-note");
-      item.setTitle("✏️ 写批注");
+      item.setTitle("✏️ Write note");
       item.onClick(() => this.addNoteToPdfSelection(selection));
     });
   }
@@ -621,7 +723,7 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
     if (!annotation)
       return;
     await this.addAnnotation(annotation);
-    new import_obsidian.Notice(`✅ ${getColorName(color, this) || color} ${t("ui.highlight", this)}已添加`);
+    new import_obsidian.Notice(`✅ ${getColorName(color, this) || color} ${t("ui.highlight", this)} added`);
   }
   async addNoteToPdfSelection(selection) {
     if (!selection)
@@ -825,7 +927,7 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
       this.clearPdfHighlightLayers(activePath);
       this.schedulePdfRender(activePath, 60);
     }
-    new import_obsidian.Notice(`🗑️ 已清空 ${count} 条批注`);
+    new import_obsidian.Notice(`🗑️ Cleared ${count} annotations`);
   }
   setupMobileFab() {
     this.cleanupMobileFab();
@@ -836,10 +938,10 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
       cls: "aa-mobile-fab",
       text: "✍️"
     });
-    fab.setAttribute("aria-label", "文章批注快捷操作");
+    fab.setAttribute("aria-label", "Article Annotator quick actions");
     const panel = container.createDiv("aa-mobile-fab-panel");
     panel.addClass("is-hidden");
-    const addBtn = panel.createEl("button", { text: "🔖 高亮" });
+    const addBtn = panel.createEl("button", { text: "🔖 Highlight" });
     addBtn.onclick = async () => {
       const md = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
       const editor = this.app.workspace.activeEditor?.editor;
@@ -849,7 +951,7 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
       }
       await this.highlightSelection(editor, md, this.settings.defaultColor);
     };
-    const noteBtn = panel.createEl("button", { text: "✏️ 写批注" });
+    const noteBtn = panel.createEl("button", { text: "✏️ Add note" });
     noteBtn.onclick = async () => {
       const md = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
       const editor = this.app.workspace.activeEditor?.editor;
@@ -859,7 +961,7 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
       }
       await this.addNoteToSelection(editor, md);
     };
-    const sidebarBtn = panel.createEl("button", { text: "📚 面板" });
+    const sidebarBtn = panel.createEl("button", { text: "📚 Sidebar" });
     sidebarBtn.onclick = () => this.activateSidebar();
     fab.onclick = (e) => {
       e.preventDefault();
@@ -928,7 +1030,7 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
     menu.addSeparator();
     menu.addItem((item) => {
       item.setIcon("sticky-note");
-      item.setTitle("✏️ 写批注");
+      item.setTitle("✏️ Write note");
       item.onClick(() => this.addNoteToSelection(editor, view));
     });
   }
@@ -1023,43 +1125,24 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
         return a.position.startLine - b.position.startLine;
       return a.position.startCh - b.position.startCh;
     });
-    let content = `# 📝 批注导出 — ${file.basename}
-
-`;
-    content += `> 导出时间：${new Date().toLocaleString("zh-CN")}
-`;
-    content += `> 批注总数：${sorted.length} 条
-
-`;
-    content += `---
-
-`;
+    let content = `# 📍 Annotations Export — ${file.basename}\n\n`;
+    content += `> Export time: ${new Date().toLocaleString("en-US")}\n`;
+    content += `> Total annotations: ${sorted.length}\n\n`;
+    content += `---\n\n`;
     sorted.forEach((a, i) => {
       const colorName = getColorName(a.color, this.plugin) || t("ui.highlights", this.plugin);
       const hasNote = a.noteContent ? "📝" : "🔆";
-      content += `## ${i + 1}. ${hasNote} ${colorName}
-
-`;
-      content += `> “${a.highlightedText}”
-
-`;
+      content += `## ${i + 1}. ${hasNote} ${colorName}\n\n`;
+      content += `> "${a.highlightedText}"\n\n`;
       if (a.noteContent) {
-        content += `**批注：** ${a.noteContent}
-
-`;
+        content += `**Note:** ${a.noteContent}\n\n`;
       }
-      content += `*位置：${getAnnotationLocationLabel(a)}*
-`;
-      content += `*类型：${a.fileType === "pdf" ? "PDF" : "Markdown"}*
-`;
-      content += `*时间：${formatTime(a.created)}*
-
-`;
-      content += `---
-
-`;
+      content += `*Location: ${getAnnotationLocationLabel(a, this)}*\n`;
+      content += `*Type: ${a.fileType === "pdf" ? "PDF" : "Markdown"}*\n`;
+      content += `*Time: ${formatTime(a.created, this)}*\n\n`;
+      content += `---\n\n`;
     });
-    const exportPath = `${file.parent?.path || ""}/${file.basename}-批注导出.md`;
+    const exportPath = `${file.parent?.path || ""}/${file.basename}-annotations-export.md`;
     let exportFile;
     try {
       const existing = this.app.vault.getAbstractFileByPath(exportPath);
@@ -1072,7 +1155,7 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
     } catch {
       exportFile = await this.app.vault.create(exportPath, content);
     }
-    new import_obsidian.Notice(`✅ 已导出：${exportFile.path}`);
+    new import_obsidian.Notice(`✅ Exported: ${exportFile.path}`);
     const leaf = this.app.workspace.getLeaf(false);
     if (leaf) {
       await leaf.openFile(exportFile);
