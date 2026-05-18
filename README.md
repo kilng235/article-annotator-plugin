@@ -45,6 +45,8 @@ Each release provides:
 <details>
 <summary>简体中文</summary>
 
+**支持平台：** Windows、安卓（Obsidian Mobile）
+
 ## 功能特点
 
 - 多颜色文本高亮
