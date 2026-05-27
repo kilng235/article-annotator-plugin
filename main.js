@@ -1689,6 +1689,39 @@ var AnnotatorSidebarView = class extends import_obsidian.ItemView {
           this.renderAnnotationCard(groupContent, annotation);
         });
       }
+      
+      // 分组容器作为拖拽放置目标
+      groupContainer.addEventListener("dragover", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        groupContainer.addClass("aa-group-drop-target");
+        groupContainer.style.borderColor = "var(--interactive-accent)";
+        groupContainer.style.backgroundColor = "color-mix(in srgb, var(--interactive-accent) 8%, transparent)";
+      });
+      
+      groupContainer.addEventListener("dragleave", (ev) => {
+        // 只有当真正离开容器时才移除样式
+        if (!groupContainer.contains(ev.relatedTarget)) {
+          groupContainer.removeClass("aa-group-drop-target");
+          groupContainer.style.borderColor = "";
+          groupContainer.style.backgroundColor = "";
+        }
+      });
+      
+      groupContainer.addEventListener("drop", async (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        groupContainer.removeClass("aa-group-drop-target");
+        groupContainer.style.borderColor = "";
+        groupContainer.style.backgroundColor = "";
+        
+        const annotationId = ev.dataTransfer?.getData("text/plain");
+        if (!annotationId) return;
+        
+        // 将批注添加到该分组
+        await this.plugin.addAnnotationToGroup(annotationId, group.id);
+        this.render();
+      });
     });
     
     // 渲染未分组的批注
