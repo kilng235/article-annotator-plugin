@@ -481,11 +481,8 @@ function refreshHighlights(plugin) {
 var DEFAULT_SETTINGS = {
   defaultColor: "#FCD34D",
   colors: ["#FCD34D", "#FBBF24", "#F97316", "#EF4444", "#8B5CF6", "#06B6D4"],
-<<<<<<< HEAD
-=======
   customHighlightColor: "",
   customHighlightColorName: "自定义",
->>>>>>> custom-highlight-color
   language: "zh"
 };
 var VIEW_TYPE = "article-annotator-sidebar";
@@ -513,15 +510,12 @@ function positionsOverlap(a, b) {
     return false;
   return true;
 }
-<<<<<<< HEAD
-=======
 
 // ==================== 颜色验证 ====================
 function validateHexColor(hex) {
   if (!hex || typeof hex !== "string") return false;
   return /^#[0-9A-Fa-f]{6}$/.test(hex.trim());
 }
->>>>>>> custom-highlight-color
 var ArticleAnnotator = class extends import_obsidian.Plugin {
   constructor() {
     super(...arguments);
@@ -1165,8 +1159,6 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
         item.onClick(() => this.highlightSelection(editor, view, color));
       });
     });
-<<<<<<< HEAD
-=======
     // 自定义颜色（如果已设置）
     if (this.settings.customHighlightColor && validateHexColor(this.settings.customHighlightColor)) {
       const colorName = this.settings.customHighlightColorName || t("ui.customColor", this);
@@ -1176,7 +1168,6 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
         item.onClick(() => this.highlightSelection(editor, view, this.settings.customHighlightColor));
       });
     }
->>>>>>> custom-highlight-color
     menu.addSeparator();
     menu.addItem((item) => {
       item.setIcon("sticky-note");
@@ -2107,8 +2098,6 @@ var AnnotatorSettingTab = class extends import_obsidian.PluginSettingTab {
       };
     });
     
-<<<<<<< HEAD
-=======
     // 自定义颜色设置
     const customColorRow = colorList.createDiv("aa-color-row");
     customColorRow.style.cssText = "display:flex;align-items:center;gap:8px;margin:4px 0;padding:8px 0;border-top:1px dashed var(--background-modifier-border);";
@@ -2185,7 +2174,6 @@ var AnnotatorSettingTab = class extends import_obsidian.PluginSettingTab {
       new import_obsidian.Notice(t("notifications.customColorNameSaved", this.plugin));
     };
     
->>>>>>> custom-highlight-color
     containerEl.createEl("hr");
     containerEl.createEl("h3", { text: t("settings.shortcuts", this.plugin) });
     const shortcuts = containerEl.createDiv();
