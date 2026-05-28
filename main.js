@@ -50,9 +50,13 @@ var LANGUAGES = {
     "fileNotFound": "File not found or has been moved",
     "crossPageNotSupported": "Cross-page selection is not supported. Please select text within the same page.",
     "invalidHex": "Please enter a valid hex color, e.g. #FCD34D",
+    "invalidHexColor": "Please enter a valid hex color, e.g. #FCD34D",
     "exportDone": "✅ Exported:",
     "clearFileConfirm": "Are you sure you want to clear all ${n} annotations in the current file?",
     "highlightAdded": "✅ ${color} Highlight added",
+    "customColorSaved": "✅ Custom color saved",
+    "customColorCleared": "✅ Custom color cleared",
+    "customColorNameSaved": "✅ Custom color name saved",
     "fileCleared": "🗑️ Cleared ${n} annotations"
   },
   "ui": {
@@ -84,6 +88,11 @@ var LANGUAGES = {
     "mobileSidebar": "📚 Sidebar",
     "sidebarTitle": "📝 Article Annotator",
     "fabAriaLabel": "Article Annotator quick actions",
+    "customColor": "Custom",
+    "customColorDesc": "Custom highlight color (hex)",
+    "customColorName": "Custom color name",
+    "customColorNameDesc": "Display name for custom color in menu",
+    "invalidHexColor": "Please enter a valid hex color, e.g. #FCD34D",
     "locationPage": "Page {page}",
     "locationLine": "Line {line}",
     "pdfAddNote": "✏️ Write note",
@@ -161,9 +170,13 @@ var LANGUAGES = {
     "fileNotFound": "文件不存在或已被移动",
     "crossPageNotSupported": "跨页选择暂不支持，请在同一页内选择文本",
     "invalidHex": "请输入有效的 hex 颜色，如 #FCD34D",
+    "invalidHexColor": "请输入有效的十六进制颜色，如 #FCD34D",
     "exportDone": "✅ 已导出：",
     "clearFileConfirm": "确定清空当前文件的 ${n} 条批注？",
     "highlightAdded": "✅ ${color} 高亮已添加",
+    "customColorSaved": "✅ 自定义颜色已保存",
+    "customColorCleared": "✅ 自定义颜色已清空",
+    "customColorNameSaved": "✅ 自定义颜色名称已保存",
     "fileCleared": "🗑️ 已清空 ${n} 条批注"
   },
   "ui": {
@@ -195,6 +208,11 @@ var LANGUAGES = {
     "mobileSidebar": "📚 面板",
     "sidebarTitle": "📝 文章批注",
     "fabAriaLabel": "文章批注快捷操作",
+    "customColor": "自定义",
+    "customColorDesc": "自定义高亮颜色（十六进制）",
+    "customColorName": "自定义颜色名称",
+    "customColorNameDesc": "在菜单中显示的颜色名称",
+    "invalidHexColor": "请输入有效的十六进制颜色，如 #FCD34D",
     "locationPage": "第 {page} 页",
     "locationLine": "第 {line} 行",
     "pdfAddNote": "✏️ 写批注",
@@ -463,6 +481,11 @@ function refreshHighlights(plugin) {
 var DEFAULT_SETTINGS = {
   defaultColor: "#FCD34D",
   colors: ["#FCD34D", "#FBBF24", "#F97316", "#EF4444", "#8B5CF6", "#06B6D4"],
+<<<<<<< HEAD
+=======
+  customHighlightColor: "",
+  customHighlightColorName: "自定义",
+>>>>>>> custom-highlight-color
   language: "zh"
 };
 var VIEW_TYPE = "article-annotator-sidebar";
@@ -490,6 +513,15 @@ function positionsOverlap(a, b) {
     return false;
   return true;
 }
+<<<<<<< HEAD
+=======
+
+// ==================== 颜色验证 ====================
+function validateHexColor(hex) {
+  if (!hex || typeof hex !== "string") return false;
+  return /^#[0-9A-Fa-f]{6}$/.test(hex.trim());
+}
+>>>>>>> custom-highlight-color
 var ArticleAnnotator = class extends import_obsidian.Plugin {
   constructor() {
     super(...arguments);
@@ -1133,6 +1165,18 @@ var ArticleAnnotator = class extends import_obsidian.Plugin {
         item.onClick(() => this.highlightSelection(editor, view, color));
       });
     });
+<<<<<<< HEAD
+=======
+    // 自定义颜色（如果已设置）
+    if (this.settings.customHighlightColor && validateHexColor(this.settings.customHighlightColor)) {
+      const colorName = this.settings.customHighlightColorName || t("ui.customColor", this);
+      menu.addItem((item) => {
+        item.setIcon("pen-tool");
+        item.setTitle(`${t("ui.highlight", this)} ${colorName} (${this.settings.customHighlightColor})`);
+        item.onClick(() => this.highlightSelection(editor, view, this.settings.customHighlightColor));
+      });
+    }
+>>>>>>> custom-highlight-color
     menu.addSeparator();
     menu.addItem((item) => {
       item.setIcon("sticky-note");
@@ -2063,6 +2107,85 @@ var AnnotatorSettingTab = class extends import_obsidian.PluginSettingTab {
       };
     });
     
+<<<<<<< HEAD
+=======
+    // 自定义颜色设置
+    const customColorRow = colorList.createDiv("aa-color-row");
+    customColorRow.style.cssText = "display:flex;align-items:center;gap:8px;margin:4px 0;padding:8px 0;border-top:1px dashed var(--background-modifier-border);";
+    const customSwatch = customColorRow.createEl("span");
+    customSwatch.style.cssText = "display:inline-block;width:24px;height:24px;border-radius:4px;border:1px solid var(--background-modifier-border);background:var(--background-secondary);";
+    const customHexInput = customColorRow.createEl("input", {
+      attr: { type: "text", placeholder: "#FCD34D", maxlength: "7" }
+    });
+    customHexInput.style.cssText = "width:80px;padding:2px 6px;font-family:monospace;";
+    const customLabel = customColorRow.createEl("span", {
+      text: t("ui.customColor", this.plugin)
+    });
+    customLabel.style.cssText = "font-size:12px;color:var(--text-muted);";
+    
+    // 更新预览色块
+    const updateCustomSwatch = () => {
+      const value = customHexInput.value.trim();
+      if (validateHexColor(value)) {
+        customSwatch.style.background = value;
+        customSwatch.style.borderColor = value;
+      } else {
+        customSwatch.style.background = "var(--background-secondary)";
+        customSwatch.style.borderColor = "var(--background-modifier-border)";
+      }
+    };
+    
+    // 初始化预览
+    if (this.plugin.settings.customHighlightColor && validateHexColor(this.plugin.settings.customHighlightColor)) {
+      customHexInput.value = this.plugin.settings.customHighlightColor;
+      updateCustomSwatch();
+    }
+    
+    // 输入时实时更新预览
+    customHexInput.oninput = () => {
+      updateCustomSwatch();
+    };
+    
+    // 失去焦点时验证并保存
+    customHexInput.onblur = async () => {
+      const value = customHexInput.value.trim();
+      if (value && !validateHexColor(value)) {
+        new import_obsidian.Notice(t("ui.invalidHexColor", this.plugin));
+        customHexInput.value = this.plugin.settings.customHighlightColor || "";
+        updateCustomSwatch();
+        return;
+      }
+      this.plugin.settings.customHighlightColor = value || "";
+      await this.plugin.saveSettings();
+      new import_obsidian.Notice(value ? t("notifications.customColorSaved", this.plugin) : t("notifications.customColorCleared", this.plugin));
+    };
+    
+    // 自定义颜色名称输入框
+    const customNameRow = colorList.createDiv("aa-color-row");
+    customNameRow.style.cssText = "display:flex;align-items:center;gap:8px;margin:4px 0;padding:4px 0 8px 32px;";
+    const customNameLabel = customNameRow.createEl("span", {
+      text: t("ui.customColorName", this.plugin)
+    });
+    customNameLabel.style.cssText = "font-size:11px;color:var(--text-muted);min-width:80px;";
+    const customNameInput = customNameRow.createEl("input", {
+      attr: { type: "text", placeholder: "自定义", maxlength: "12" }
+    });
+    customNameInput.style.cssText = "width:120px;padding:2px 6px;font-size:12px;";
+    
+    // 初始化名称
+    if (this.plugin.settings.customHighlightColorName) {
+      customNameInput.value = this.plugin.settings.customHighlightColorName;
+    }
+    
+    // 失去焦点时保存名称
+    customNameInput.onblur = async () => {
+      const name = customNameInput.value.trim();
+      this.plugin.settings.customHighlightColorName = name || "自定义";
+      await this.plugin.saveSettings();
+      new import_obsidian.Notice(t("notifications.customColorNameSaved", this.plugin));
+    };
+    
+>>>>>>> custom-highlight-color
     containerEl.createEl("hr");
     containerEl.createEl("h3", { text: t("settings.shortcuts", this.plugin) });
     const shortcuts = containerEl.createDiv();
