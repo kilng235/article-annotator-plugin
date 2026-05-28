@@ -120,7 +120,7 @@ var LANGUAGES = {
     "shortcutsHint": "💡 Set shortcuts in Obsidian Settings → Hotkeys",
     "notBound": "not bound",
     "readingModeNotice": "Note: Annotations are not visible in Reading mode. Please switch to Editing mode to view highlights.",
-    "aboutText": "Article Annotator v0.1.16 — Inspired by Microsoft Word comments. All annotation data is stored independently and does not modify the original file. Currently supports Desktop, iPad, and Android — manual sync required across devices. Automatic sync coming soon.",
+    "aboutText": "Article Annotator 0.1.17 — Inspired by Microsoft Word comments. All annotation data is stored independently and does not modify the original file. Currently supports Desktop, iPad, and Android — manual sync required across devices. Automatic sync coming soon.\n\n💡 Custom highlight color uses hex code (e.g., #FCD34D).",
   },
   "colorNames": {
     "#FCD34D": "Warm Yellow",
@@ -240,7 +240,7 @@ var LANGUAGES = {
     "shortcutsHint": "💡 可在 Obsidian 设置 → 快捷键 中为上述命令绑定快捷键",
     "notBound": "未绑定",
     "readingModeNotice": "说明：阅读模式当前不显示批注高亮，请在编辑模式下查看高亮。",
-    "aboutText": "文章批注 v0.1.16 — 参考 Microsoft Word 批注设计。所有批注数据独立保存，不修改原文。目前支持电脑、iPad、手机三端使用，跨设备需手动同步，自动同步功能后续更新。",
+    "aboutText": "文章批注 0.1.17 — 参考 Microsoft Word 批注设计。所有批注数据独立保存，不修改原文。目前支持电脑、iPad、手机三端使用，跨设备需手动同步，自动同步功能后续更新。\n\n💡 自定义高亮颜色使用十六进制代码（如 #FCD34D）。",
   },
   "colorNames": {
     "#FCD34D": "暖黄",
