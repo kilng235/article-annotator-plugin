@@ -79,8 +79,8 @@ var LANGUAGES = {
     "search": "🔍 Search",
     "export": "📤 Export",
     "clear": "🗑️ Clear",
-    "navigate": "📍 Navigate",
-    "editNote": "✏️ Edit note",
+    "navigate": "Navigate",
+    "editNote": "Edit note",
     "editNoteTitle": "✏️ Edit note",
     "searchAll": "🔍 Search all annotations",
     "searchResults": "${n} annotations found",
@@ -122,7 +122,7 @@ var LANGUAGES = {
     "shortcutsHint": "💡 Set shortcuts in Obsidian Settings → Hotkeys",
     "notBound": "not bound",
     "readingModeNotice": "Note: Annotations are not visible in Reading mode. Please switch to Editing mode to view highlights.",
-    "aboutText": "Article Annotator 0.1.18 — Inspired by Microsoft Word comments. All annotation data is stored independently and does not modify the original file. Supports sync across Desktop, iPad, and Android when your vault syncs the file <strong><code>article-annotator/annotations.json</code></strong>.\n\n💡 Custom highlight color uses hex code (e.g., #FCD34D).",
+    "aboutText": "Article Annotator 0.2.0 — Inspired by Microsoft Word comments. All annotation data is stored independently and does not modify the original file. Supports sync across Desktop, iPad, and Android when your vault syncs the file <strong><code>article-annotator/annotations.json</code></strong>.\n\n💡 Custom highlight color uses hex code (e.g., #FCD34D).",
   },
   "colorNames": {
     "#FCD34D": "Warm Yellow",
@@ -201,8 +201,8 @@ var LANGUAGES = {
     "search": "🔍 搜索",
     "export": "📤 导出",
     "clear": "🗑️ 清空",
-    "navigate": "📍 定位",
-    "editNote": "✏️ 编辑批注",
+    "navigate": "定位",
+    "editNote": "编辑",
     "editNoteTitle": "✏️ 编辑批注",
     "searchAll": "🔍 搜索全部批注",
     "searchResults": "共 ${n} 条批注",
@@ -244,7 +244,7 @@ var LANGUAGES = {
     "shortcutsHint": "💡 可在 Obsidian 设置 → 快捷键 中为上述命令绑定快捷键",
     "notBound": "未绑定",
     "readingModeNotice": "说明：阅读模式当前不显示批注高亮，请在编辑模式下查看高亮。",
-    "aboutText": "文章批注 0.1.18 — 参考 Microsoft Word 批注设计。所有批注数据独立保存，不修改原文。当前已支持电脑、iPad、手机三端同步，需确保知识库同步文件 <strong><code>article-annotator/annotations.json</code></strong>。\n\n💡 自定义高亮颜色使用十六进制代码（如 #FCD34D）。",
+    "aboutText": "文章批注 0.2.0 — 参考 Microsoft Word 批注设计。所有批注数据独立保存，不修改原文。当前已支持电脑、iPad、手机三端同步，需确保知识库同步文件 <strong><code>article-annotator/annotations.json</code></strong>。\n\n💡 自定义高亮颜色使用十六进制代码（如 #FCD34D）。",
   },
   "colorNames": {
     "#FCD34D": "暖黄",
@@ -1642,6 +1642,7 @@ var AnnotatorSidebarView = class extends import_obsidian.ItemView {
     this.icon = "pen-tool";
     this.selectedAnnotations = new Set();
     this.isMultiSelectMode = false;
+    this.editingId = null;
   }
   getViewType() {
     return VIEW_TYPE;
@@ -1663,50 +1664,40 @@ var AnnotatorSidebarView = class extends import_obsidian.ItemView {
     container.empty();
     const header = container.createDiv("aa-sidebar-header");
     const titleEl = header.createEl("h3", { text: t("ui.sidebarTitle", this.plugin) });
-    titleEl.style.cssText = "font-size:16px;font-weight:600;margin:0;";
     const closeBtn = header.createEl("button", { text: "\xD7" });
-    closeBtn.style.cssText = "background:none;border:none;font-size:20px;cursor:pointer;opacity:0.6;";
     closeBtn.onclick = () => {
       this.plugin.app.workspace.detachLeavesOfType(VIEW_TYPE);
     };
     if (!this.currentFile) {
       const emptyEl = container.createDiv("aa-sidebar-empty");
-      emptyEl.style.cssText = "padding:24px;text-align:center;color:var(--text-muted);";
       emptyEl.createEl("p", { text: t("notifications.openFileFirst", this.plugin) });
       return;
     }
     const annotations = this.plugin.getAnnotationsForFile(this.currentFile.path);
     const stats = container.createDiv("aa-sidebar-stats");
-    stats.style.cssText = "display:flex;justify-content:space-around;padding:10px 12px;border-bottom:1px solid var(--background-modifier-border);";
     const highlightCount = annotations.filter((a) => a.type === "highlight").length;
     const noteCount = annotations.filter((a) => a.noteContent).length;
     const totalCount = annotations.length;
     const createStat = (label, value) => {
       const el = stats.createDiv("aa-stat");
-      el.style.cssText = "text-align:center;";
       el.createEl("div", {
         text: String(value),
         cls: "aa-stat-value"
-      }).style.cssText = "font-size:20px;font-weight:700;";
+      });
       el.createEl("div", {
         text: label,
         cls: "aa-stat-label"
-      }).style.cssText = "font-size:11px;color:var(--text-muted);";
+      });
     };
     createStat(t("ui.all", this.plugin), totalCount);
     createStat(t("ui.highlights", this.plugin), highlightCount);
     createStat(t("ui.notes", this.plugin), noteCount);
     const actions = container.createDiv("aa-sidebar-actions");
-    actions.style.cssText = "display:flex;gap:6px;padding:8px 12px;border-bottom:1px solid var(--background-modifier-border);";
-    const btnStyle = "flex:1;padding:5px 8px;font-size:12px;border-radius:4px;border:1px solid var(--background-modifier-border);background:var(--background-primary);cursor:pointer;text-align:center;";
     const searchBtn = actions.createEl("button", { text: t("ui.search", this.plugin) });
-    searchBtn.style.cssText = btnStyle;
     searchBtn.onclick = () => this.plugin.openSearchModal();
     const exportBtn = actions.createEl("button", { text: t("ui.export", this.plugin) });
-    exportBtn.style.cssText = btnStyle;
     exportBtn.onclick = () => this.plugin.exportAnnotations();
     const clearBtn = actions.createEl("button", { text: t("ui.clear", this.plugin) });
-    clearBtn.style.cssText = btnStyle;
     clearBtn.onclick = async () => {
       const count = annotations.length;
       if (count === 0)
@@ -1718,7 +1709,6 @@ var AnnotatorSidebarView = class extends import_obsidian.ItemView {
     };
     // 多选按钮
     const multiSelectBtn = actions.createEl("button", { text: t("ui.selectMultiple", this.plugin) });
-    multiSelectBtn.style.cssText = btnStyle;
     if (this.isMultiSelectMode) {
       multiSelectBtn.addClass("is-active");
     }
@@ -1732,13 +1722,11 @@ var AnnotatorSidebarView = class extends import_obsidian.ItemView {
     // 分组按钮（仅在多选模式下显示）
     if (this.isMultiSelectMode && this.selectedAnnotations.size > 0) {
       const groupBtn = actions.createEl("button", { text: t("ui.groupSelected", this.plugin) });
-      groupBtn.style.cssText = btnStyle;
       groupBtn.onclick = () => this.showCreateGroupDialog();
     }
     // 取消选择按钮（仅在多选模式下显示）
     if (this.isMultiSelectMode) {
       const cancelBtn = actions.createEl("button", { text: t("ui.cancelSelection", this.plugin) });
-      cancelBtn.style.cssText = btnStyle;
       cancelBtn.onclick = () => {
         this.isMultiSelectMode = false;
         this.selectedAnnotations.clear();
@@ -1746,7 +1734,6 @@ var AnnotatorSidebarView = class extends import_obsidian.ItemView {
       };
     }
     const list = container.createDiv("aa-sidebar-list");
-    list.style.cssText = "flex:1;overflow-y:auto;padding:8px;";
     if (annotations.length === 0) {
       const emptyEl = list.createDiv("aa-sidebar-empty");
       emptyEl.style.cssText = "padding:24px;text-align:center;color:var(--text-muted);";
@@ -1902,17 +1889,22 @@ var AnnotatorSidebarView = class extends import_obsidian.ItemView {
   }
   renderAnnotationCard(container, annotation) {
     const a = annotation;
+    const isEditing = this.editingId === a.id;
     const card = container.createDiv("aa-card");
-    card.style.cssText = `
-      margin:6px 0;border-radius:6px;
-      background:var(--background-secondary);
-      transition:box-shadow 0.15s;
-    `;
-    card.style.borderTop = `3px solid ${a.color}`;
+    if (isEditing) card.addClass("is-editing");
+
+    // 顶部色条
+    const stripe = card.createDiv("aa-card-color-stripe");
+    stripe.style.background = a.color;
+
+    // 装订孔
+    const holes = card.createDiv("aa-card-holes");
+    for (let i = 0; i < 3; i++) holes.createDiv("aa-card-hole");
+
     // 多选复选框
-    if (this.isMultiSelectMode) {
+    if (this.isMultiSelectMode && !isEditing) {
       const checkboxContainer = card.createDiv("aa-card-checkbox");
-      checkboxContainer.style.cssText = "position:absolute;top:6px;left:6px;z-index:1;";
+      checkboxContainer.style.cssText = "position:absolute;top:6px;left:24px;z-index:4;";
       const checkbox = checkboxContainer.createEl("input", { type: "checkbox" });
       checkbox.checked = this.selectedAnnotations.has(a.id);
       checkbox.style.cssText = "cursor:pointer;";
@@ -1924,69 +1916,116 @@ var AnnotatorSidebarView = class extends import_obsidian.ItemView {
         }
         this.render();
       };
-      card.style.position = "relative";
-      card.style.paddingLeft = "28px";
     }
-    const headerRow = card.createDiv("aa-card-header");
-    headerRow.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:6px 10px 0;";
+
+    // 内容区
+    const body = card.createDiv("aa-card-body");
     const colorName = getColorName(a.color, this.plugin) || t("ui.highlights", this.plugin);
-    const typeBadge = headerRow.createEl("span", {
-      text: a.noteContent ? `\u{1F4DD} ${colorName}` : `\u{1F506} ${colorName}`
-    });
-    typeBadge.style.cssText = `font-size:11px;color:${a.color};font-weight:500;`;
-    headerRow.createEl("span", {
-      text: formatTime(a.created, this.plugin)
-    }).style.cssText = "font-size:10px;color:var(--text-faint);";
-    const textEl = card.createDiv("aa-card-text");
-    textEl.setText(a.highlightedText);
-    textEl.style.cssText = "padding:4px 10px;font-size:13px;line-height:1.5;word-break:break-word;";
-    if (a.noteContent) {
-      const noteEl = card.createDiv("aa-card-note");
-      noteEl.setText(`\u{1F4AC} ${a.noteContent}`);
-      noteEl.style.cssText = "padding:4px 10px;font-size:12px;color:var(--text-muted);border-top:1px solid var(--background-modifier-border);margin-top:4px;";
+
+    if (isEditing) {
+      // ===== 编辑模式 =====
+      const headerRow = body.createDiv("aa-card-header");
+      const typeBadge = headerRow.createEl("span");
+      typeBadge.setText(colorName);
+      typeBadge.addClass("aa-card-color-label");
+      typeBadge.style.color = a.color;
+
+      const textEl = body.createDiv("aa-card-text");
+      textEl.setText(a.highlightedText);
+
+      const textarea = body.createEl("textarea", { cls: "aa-card-edit-textarea" });
+      textarea.value = a.noteContent || "";
+      textarea.placeholder = this.plugin.settings.language === "zh" ? "写下批注…" : "Write a note…";
+      textarea.rows = 3;
+
+      const lineInfo = body.createDiv("aa-card-line");
+      lineInfo.setText(getAnnotationLocationLabel(a, this.plugin));
+
+      const editActions = body.createDiv("aa-card-actions");
+      editActions.style.opacity = "1";
+      const eBtnStyle = "flex:1;padding:3px 6px;font-size:10px;border:none;background:transparent;cursor:pointer;border-radius:3px;";
+      const saveBtn = editActions.createEl("button", { text: this.plugin.settings.language === "zh" ? "保存" : "Save" });
+      saveBtn.style.cssText = eBtnStyle + "color:var(--interactive-accent);font-weight:600;";
+      saveBtn.onclick = async (e) => {
+        e.stopPropagation();
+        await this.plugin.updateAnnotation(a.id, { noteContent: textarea.value.trim() });
+        this.editingId = null;
+        this.render();
+      };
+      const cancelBtn = editActions.createEl("button", { text: this.plugin.settings.language === "zh" ? "取消" : "Cancel" });
+      cancelBtn.style.cssText = eBtnStyle;
+      cancelBtn.onclick = (e) => {
+        e.stopPropagation();
+        this.editingId = null;
+        this.render();
+      };
+
+      requestAnimationFrame(() => {
+        textarea.focus();
+        textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+      });
+
+      textarea.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") { e.preventDefault(); this.editingId = null; this.render(); }
+        if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); saveBtn.click(); }
+      });
+
+      textarea.addEventListener("blur", () => {
+        setTimeout(() => {
+          if (this.editingId === a.id && document.activeElement !== textarea) {
+            this.plugin.updateAnnotation(a.id, { noteContent: textarea.value.trim() });
+            this.editingId = null;
+            this.render();
+          }
+        }, 150);
+      });
+
+    } else {
+      // ===== 展示模式 =====
+      const headerRow = body.createDiv("aa-card-header");
+      const typeBadge = headerRow.createEl("span");
+      typeBadge.setText(colorName);
+      typeBadge.addClass("aa-card-color-label");
+      typeBadge.style.color = a.color;
+      headerRow.createEl("span", { text: formatTime(a.created, this.plugin) }).addClass("aa-card-time");
+
+      const textEl = body.createDiv("aa-card-text");
+      textEl.setText(a.highlightedText);
+
+      if (a.noteContent) {
+        const noteEl = body.createDiv("aa-card-note");
+        noteEl.setText(a.noteContent);
+      }
+
+      const lineInfo = body.createDiv("aa-card-line");
+      lineInfo.setText(getAnnotationLocationLabel(a, this.plugin));
+
+      const cardActions = body.createDiv("aa-card-actions");
+      const actionBtnStyle = "flex:1;padding:3px 6px;font-size:10px;border:none;background:transparent;cursor:pointer;border-radius:3px;";
+      const navBtn = cardActions.createEl("button", { text: t("ui.navigate", this.plugin) });
+      navBtn.style.cssText = actionBtnStyle;
+      navBtn.onclick = async (e) => {
+        e.stopPropagation();
+        await this.plugin.navigateToAnnotation(a);
+      };
+      const deleteBtn = cardActions.createEl("button", { text: this.plugin.settings.language === "zh" ? "删除" : "Delete" });
+      deleteBtn.addClass("is-danger");
+      deleteBtn.style.cssText = actionBtnStyle;
+      deleteBtn.onclick = async (e) => {
+        e.stopPropagation();
+        if (!confirm(t("ui.deleteConfirm", this.plugin))) return;
+        await this.plugin.removeAnnotation(a.id);
+        this.render();
+      };
+
+      // 点击卡片正文进入编辑
+      body.addEventListener("click", (e) => {
+        if (e.target.closest(".aa-card-actions")) return;
+        this.editingId = a.id;
+        this.render();
+      });
+      body.style.cursor = "pointer";
     }
-    const lineInfo = card.createDiv("aa-card-line");
-    lineInfo.setText(getAnnotationLocationLabel(a, this.plugin));
-    lineInfo.style.cssText = "padding:0 10px 4px;font-size:10px;color:var(--text-faint);";
-    const cardActions = card.createDiv("aa-card-actions");
-    cardActions.style.cssText = "display:flex;gap:2px;padding:4px 8px 6px;border-top:1px solid var(--background-modifier-border);";
-    const actionBtnStyle = "flex:1;padding:4px 6px;font-size:11px;border:none;background:transparent;cursor:pointer;border-radius:4px;";
-    const navBtn = cardActions.createEl("button", { text: t("ui.navigate", this.plugin) });
-    navBtn.style.cssText = actionBtnStyle;
-    navBtn.onclick = async (e) => {
-      e.stopPropagation();
-      await this.plugin.navigateToAnnotation(a);
-    };
-    const editBtn = cardActions.createEl("button", { text: t("ui.editNote", this.plugin) });
-    editBtn.style.cssText = actionBtnStyle;
-    editBtn.onclick = (e) => {
-      e.stopPropagation();
-      const modal = new NoteModal(
-        this.plugin.app,
-        this.plugin,
-        a,
-        (content) => {
-          this.plugin.updateAnnotation(a.id, { noteContent: content });
-          this.render();
-        }
-      );
-      modal.open();
-    };
-    const deleteBtn = cardActions.createEl("button", { text: "\u{1F5D1}\uFE0F" });
-    deleteBtn.style.cssText = actionBtnStyle;
-    deleteBtn.onclick = async (e) => {
-      e.stopPropagation();
-      if (!confirm(t("ui.deleteConfirm", this.plugin)))
-        return;
-      await this.plugin.removeAnnotation(a.id);
-      this.render();
-    };
-    card.onmouseenter = () => {
-      card.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
-    };
-    card.onmouseleave = () => {
-      card.style.boxShadow = "none";
-    };
 
     // 拖拽排序（仅当前文件内）
     card.draggable = true;
