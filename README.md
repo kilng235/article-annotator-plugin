@@ -12,7 +12,9 @@
 ## 功能
 
 - **文本高亮 + 批注**：在 Markdown 编辑器中高亮选中文字，添加类似 Word 的批注
-- **侧边栏管理**：在侧边栏面板中查看所有批注，支持编辑、删除、导出
+- **即点即编**：点击批注卡片直接原地进入编辑，无弹窗打断，blur 自动保存，Esc 取消
+- **笔记本内页风格**：批注卡片采用横线纸面、装订孔、页边距竖线和色条标记，视觉统一为纸质笔记质感
+- **侧边栏管理**：在侧边栏面板中查看所有批注，支持定位、删除、导出
 - **批注卡片拖拽排序**：在侧边栏中自由拖拽调整批注顺序
 - **批注分组管理**：支持选择多个批注创建分组，拖拽归类，折叠/展开，重命名、取消分组
 - **多端支持**：支持 **电脑（Desktop） / iPad / 手机（Android）** 三端同步
@@ -27,7 +29,9 @@
 <summary>🔤 Features (English)</summary>
 
 - **Text Highlight + Annotations**: Highlight selected text in Markdown editor and add Word-like comments
-- **Sidebar Management**: View all annotations in the sidebar panel with edit, delete, and export support
+- **Click-to-Edit**: Click any annotation card to edit notes in place — no modal popup, blur auto-saves, Esc cancels
+- **Notebook Style**: Cards feature ruled lines, punch holes, margin line, and color stripe for a paper notebook aesthetic
+- **Sidebar Management**: View all annotations in the sidebar panel with locate, delete, and export support
 - **Drag-and-Drop Cards**: Reorder annotation cards freely in the sidebar
 - **Annotation Groups**: Create groups from multiple annotations, drag to organize, collapse/expand, rename, ungroup
 - **Multi-Device Sync**: Sync annotations across **Desktop / iPad / Android**
@@ -93,7 +97,7 @@
 
 ### 管理批注
 
-- **编辑**：在侧边栏点击批注卡片进入编辑
+- **编辑**：点击批注卡片直接原地编辑，无需弹窗
 - **删除**：点击删除按钮（全局删除有二次确认）
 - **清空**：可一键清空所有批注
 - **导出**：支持导出为 JSON 格式
@@ -119,7 +123,7 @@
 
 #### Manage Annotations
 
-- **Edit**: Click annotation card in sidebar to edit
+- **Edit**: Click annotation card to edit in place, no modal needed
 - **Delete**: Click delete button (global delete has double confirmation)
 - **Clear All**: One-click to clear all annotations
 - **Export**: Export as JSON
